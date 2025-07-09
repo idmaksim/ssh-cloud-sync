@@ -102,8 +102,6 @@ export const update = new Command("update")
       updates[field] = field === "port" ? parseInt(value) : value;
     }
 
-    console.log(updates);
-
     try {
       await axios.patch(`${config.host}/hosts/${Number(host.id)}`, updates, {
         headers: {
