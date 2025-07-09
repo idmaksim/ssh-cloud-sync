@@ -3,10 +3,8 @@
 import { Command } from "commander";
 import { auth } from "./commands/auth";
 import { mkdir } from "fs/promises";
-import { join } from "path";
-import { homedir } from "os";
-
-const CONFIG_DIR = join(homedir(), ".ssh-cloud-sync");
+import { CONFIG_DIR } from "./constants";
+import { check } from "./commands/check";
 
 const program = new Command().action(async () => {
   try {
@@ -21,4 +19,5 @@ program
   .version("1.0.0")
   .description("SSH Cloud Sync CLI")
   .addCommand(auth)
+  .addCommand(check)
   .parse(process.argv);

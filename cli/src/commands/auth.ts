@@ -1,6 +1,9 @@
 import { Command } from "commander";
 import inquirer from "inquirer";
 import axios from "axios";
+import { writeFile } from "fs/promises";
+import { CONFIG_DIR } from "../constants";
+import { join } from "path";
 
 export const auth = new Command("auth")
   .description("Authenticate with the API")
@@ -39,5 +42,7 @@ export const auth = new Command("auth")
         },
       },
     ]);
-    console.log(data);
+
+    const configPath = join(CONFIG_DIR, "config.json");
+    await writeFile(configPath, JSON.stringify(data, null, 2));
   });
