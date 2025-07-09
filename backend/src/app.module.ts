@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
+import { HostsModule } from './hosts/hosts.module';
 import config from './config/config';
 
 @Module({
@@ -10,6 +11,7 @@ import config from './config/config';
     PrismaModule,
     ConfigModule.forRoot({ isGlobal: true, load: [config] }),
     AuthModule,
+    HostsModule,
   ],
   controllers: [AppController],
 })
