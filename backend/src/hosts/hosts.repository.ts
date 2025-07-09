@@ -13,8 +13,11 @@ export class HostsRepository {
           ? [
               { address: { contains: query, mode: 'insensitive' } },
               { password: { contains: query, mode: 'insensitive' } },
-              { sshKey: { contains: query, mode: 'insensitive' } },
-              { port: { equals: Number(query) } },
+              {
+                port: Number.isInteger(Number(query))
+                  ? { equals: Number(query) }
+                  : undefined,
+              },
             ]
           : undefined,
       },
@@ -28,8 +31,11 @@ export class HostsRepository {
           ? [
               { address: { contains: query, mode: 'insensitive' } },
               { password: { contains: query, mode: 'insensitive' } },
-              { sshKey: { contains: query, mode: 'insensitive' } },
-              { port: { equals: Number(query) } },
+              {
+                port: Number.isInteger(Number(query))
+                  ? { equals: Number(query) }
+                  : undefined,
+              },
             ]
           : undefined,
       },

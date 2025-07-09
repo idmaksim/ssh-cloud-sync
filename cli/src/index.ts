@@ -6,6 +6,8 @@ import { mkdir } from "fs/promises";
 import { CONFIG_DIR } from "./constants";
 import { check } from "./commands/check";
 import { list } from "./commands/list";
+import chalk from "chalk";
+import { add } from "./commands/add";
 
 const program = new Command().action(async () => {
   try {
@@ -22,4 +24,9 @@ program
   .addCommand(auth)
   .addCommand(check)
   .addCommand(list)
+  .addCommand(add)
   .parse(process.argv);
+
+process.on("uncaughtException", (error) => {
+  console.error(chalk.red("✗ Uncaught Exception"));
+});

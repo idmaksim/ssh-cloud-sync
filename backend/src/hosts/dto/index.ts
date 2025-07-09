@@ -13,11 +13,6 @@ export class HostBaseDto {
   @ApiProperty()
   @IsString()
   password: string;
-
-  @ApiProperty()
-  @IsOptional()
-  @IsString()
-  sshKey?: string;
 }
 
 export class HostCreateDto extends HostBaseDto {}

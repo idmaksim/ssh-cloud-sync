@@ -3,16 +3,7 @@ import { getConfig } from "../utils";
 import axios from "axios";
 import inquirer from "inquirer";
 import Table from "cli-table3";
-
-interface Host {
-  id: number;
-  address: string;
-  port: number;
-  password: string | null;
-  sshKey: string | null;
-  createdAt: string;
-  updatedAt: string;
-}
+import { Host } from "../shared/host";
 
 export const list = new Command("list")
   .description("List all SSH hosts")
@@ -37,15 +28,7 @@ export const list = new Command("list")
     );
 
     const table = new Table({
-      head: [
-        "ID",
-        "Address",
-        "Port",
-        "Password",
-        "SSH Key",
-        "Created At",
-        "Updated At",
-      ],
+      head: ["ID", "Address", "Port", "Password", "Created At", "Updated At"],
       style: {
         head: ["cyan"],
         border: ["gray"],
@@ -58,7 +41,6 @@ export const list = new Command("list")
         host.address,
         host.port.toString(),
         host.password ? "***" : "-",
-        host.sshKey ? "Yes" : "No",
         new Date(host.createdAt).toLocaleString(),
         new Date(host.updatedAt).toLocaleString(),
       ]);

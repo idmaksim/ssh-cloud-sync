@@ -13,7 +13,6 @@ model Host {
   address   String
   port      Int      @default(22)
   password  String
-  sshKey    String?  @map("ssh_key")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
