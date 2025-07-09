@@ -7,15 +7,13 @@ import { CONFIG_PATH } from "../constants";
 export const auth = new Command("auth")
   .description("Authenticate with the API")
   .action(async () => {
-    let tempHost = "";
-    const data = await inquirer.prompt([
+    const { host } = await inquirer.prompt([
       {
         type: "input",
         name: "host",
         message: "Enter your host (e.g. ssh.example.com)",
         validate: async (value) => {
           try {
-            tempHost = value;
             await axios.get(`${value}/health`);
             return true;
           } catch (error) {
@@ -23,13 +21,16 @@ export const auth = new Command("auth")
           }
         },
       },
+    ]);
+
+    const { secretKey } = await inquirer.prompt([
       {
         type: "input",
         name: "secretKey",
         message: "Enter your secret key (e.g. 1234567890)",
         validate: async (value) => {
           try {
-            await axios.get(`${tempHost}/auth/verify`, {
+            await axios.get(`${host}/auth/verify`, {
               headers: {
                 "X-Secret-Key": value,
               },
@@ -42,5 +43,5 @@ export const auth = new Command("auth")
       },
     ]);
 
-    await writeFile(CONFIG_PATH, JSON.stringify(data, null, 2));
+    await writeFile(CONFIG_PATH, JSON.stringify({ host, secretKey }, null, 2));
   });

@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class HostBaseDto {
@@ -16,3 +16,5 @@ export class HostBaseDto {
 }
 
 export class HostCreateDto extends HostBaseDto {}
+
+export class HostUpdateDto extends PartialType(HostBaseDto) {}

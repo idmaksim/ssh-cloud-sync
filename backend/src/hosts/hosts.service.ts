@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { HostsRepository } from './hosts.repository';
-import { HostCreateDto } from './dto';
+import { HostCreateDto, HostUpdateDto } from './dto';
 
 @Injectable()
 export class HostsService {
@@ -21,5 +21,9 @@ export class HostsService {
 
   async delete(id: number) {
     return this.hostsRepository.delete(id);
+  }
+
+  async update(id: number, host: HostUpdateDto) {
+    return this.hostsRepository.update(id, host);
   }
 }

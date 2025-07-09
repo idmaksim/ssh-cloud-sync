@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { HostCreateDto } from './dto';
+import { HostCreateDto, HostUpdateDto } from './dto';
 
 @Injectable()
 export class HostsRepository {
@@ -52,6 +52,17 @@ export class HostsRepository {
     try {
       return this.prisma.host.delete({
         where: { id },
+      });
+    } catch (error) {
+      throw new NotFoundException('Host not found');
+    }
+  }
+
+  async update(id: number, host: HostUpdateDto) {
+    try {
+      return this.prisma.host.update({
+        where: { id },
+        data: host,
       });
     } catch (error) {
       throw new NotFoundException('Host not found');

@@ -8,6 +8,7 @@ import { check } from "./commands/check";
 import { list } from "./commands/list";
 import chalk from "chalk";
 import { add } from "./commands/add";
+import { update } from "./commands/update";
 
 const program = new Command().action(async () => {
   try {
@@ -25,8 +26,10 @@ program
   .addCommand(check)
   .addCommand(list)
   .addCommand(add)
+  .addCommand(update)
   .parse(process.argv);
 
 process.on("uncaughtException", (error) => {
+  console.error(error);
   console.error(chalk.red("✗ Uncaught Exception"));
 });
