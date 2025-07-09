@@ -1,5 +1,5 @@
 {
-  "name": "sync",
+  "name": "ssh-cloud-sync",
   "version": "1.0.0",
   "main": "dist/index.js",
   "bin": {
@@ -9,10 +9,10 @@
     "build": "tsc",
     "start": "node dist/index.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["ssh", "cloud", "sync", "cli"],
+  "author": "dmaksim",
   "license": "ISC",
-  "description": "",
+  "description": "CLI tool for synchronizing SSH keys with cloud storage",
   "dependencies": {
     "@types/node": "^24.0.12",
     "axios": "^1.10.0",
