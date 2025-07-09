@@ -1,7 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { Public } from './decorators/public.decorator';
-import { ApiSecurity, ApiTags } from '@nestjs/swagger';
-import { SECRET_KEY_HEADER } from './shared/global';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller()
 @ApiTags('App')
@@ -12,9 +11,5 @@ export class AppController {
     return 'OK';
   }
 
-  @ApiSecurity(SECRET_KEY_HEADER)
-  @Get('test')
-  test(): string {
-    return 'Test';
-  }
+  // @ApiSecurity(SECRET_KEY_HEADER)
 }
