@@ -1,0 +1,47 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      # Database url
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/ssh_cloud_sync?schema=public
+
+      # Secret key for auth to api (CHANGE THIS!!!)
+      - SECRET_KEY=string
+
+      # Swagger credentials (CHANGE THIS!!!)
+      - SWAGGER_USER=string
+      - SWAGGER_PASSWORD=string
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/health || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      # Database credentials (CHANGE THIS!!!)
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=ssh_cloud_sync
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
