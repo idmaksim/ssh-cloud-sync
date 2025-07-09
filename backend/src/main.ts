@@ -1,25 +1,24 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NextFunction, Request, Response } from 'express';
+import { SecretKeyGuard } from './guards/secret-key.guard';
+import { Reflector } from '@nestjs/core';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const configService = app.get(ConfigService);
   const config = new DocumentBuilder()
-    .setTitle('Nest.js Base Template')
-    .addBearerAuth({
-      type: 'http',
-      scheme: 'bearer',
-      bearerFormat: 'JWT',
-      name: 'JWT',
-      description: 'Enter JWT token',
-      in: 'header',
-    })
+    .setTitle('SSH Cloud Sync API')
+    .setDescription('API documentation')
+    .setVersion('1.0')
+    .addApiKey(
+      { type: 'apiKey', name: 'X-Secret-Key', in: 'header' },
+      'X-Secret-Key',
+    )
     .build();
-  const document = SwaggerModule.createDocument(app, config);
 
   app.use('/docs', (req: Request, res: Response, next: NextFunction) => {
     const auth = req.headers.authorization;
@@ -54,6 +53,8 @@ async function bootstrap() {
     next();
   });
 
+  const document = SwaggerModule.createDocument(app, config);
+
   SwaggerModule.setup('docs', app, document, {
     swaggerOptions: {
       tagsSorter: 'alpha',
@@ -64,11 +65,12 @@ async function bootstrap() {
       tryItOutEnabled: true,
       syntaxHighlight: true,
     },
-    customSiteTitle: 'Nest.js Base Template',
-    customCss: '.swagger-ui .topbar { display: none }',
   });
+
+  app.useGlobalGuards(
+    new SecretKeyGuard(app.get(Reflector), app.get(ConfigService)),
+  );
 
   await app.listen(process.env.PORT ?? 3000);
 }
-
-bootstrap().catch(console.error);
+bootstrap();
