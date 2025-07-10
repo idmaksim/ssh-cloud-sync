@@ -28,7 +28,16 @@ export const list = new Command("list")
     );
 
     const table = new Table({
-      head: ["ID", "Address", "Port", "Password", "Created At", "Updated At"],
+      head: [
+        "ID",
+        "Alias",
+        "Username",
+        "Address",
+        "Port",
+        "Password",
+        "Created At",
+        "Updated At",
+      ],
       style: {
         head: ["cyan"],
         border: ["gray"],
@@ -38,6 +47,8 @@ export const list = new Command("list")
     response.data.data.forEach((host: Host) => {
       table.push([
         host.id.toString(),
+        host.alias,
+        host.username,
         host.address,
         host.port.toString(),
         host.password ? "***" : "-",

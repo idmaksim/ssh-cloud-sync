@@ -24,6 +24,17 @@ export const add = new Command("add")
         name: "password",
         message: "Enter the password of the SSH host",
       },
+      {
+        type: "input",
+        name: "alias",
+        message: "Enter the alias of the SSH host",
+      },
+      {
+        type: "input",
+        name: "username",
+        message: "Enter the username of the SSH host",
+        default: "root",
+      },
     ]);
     data.port = Number(data.port);
     const config = await getConfig();

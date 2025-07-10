@@ -5,7 +5,7 @@ import axios from "axios";
 import { Host } from "../shared/host";
 import chalk from "chalk";
 
-type UpdatableFields = "address" | "port" | "password";
+type UpdatableFields = "address" | "port" | "password" | "alias" | "username";
 
 export const update = new Command("update")
   .description("Update an SSH host")
@@ -69,6 +69,8 @@ export const update = new Command("update")
           { name: "Address", value: "address" },
           { name: "Port", value: "port" },
           { name: "Password", value: "password" },
+          { name: "Alias", value: "alias" },
+          { name: "Username", value: "username" },
         ],
       },
     ]);
@@ -92,6 +94,16 @@ export const update = new Command("update")
               const port = parseInt(value);
               if (isNaN(port) || port < 1 || port > 65535) {
                 return "Port must be a number between 1 and 65535";
+              }
+            }
+            if (field === "alias") {
+              if (value.length > 255) {
+                return "Alias must be less than 255 characters";
+              }
+            }
+            if (field === "username") {
+              if (value.length > 255) {
+                return "Username must be less than 255 characters";
               }
             }
             return true;

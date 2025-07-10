@@ -12,6 +12,8 @@ export class HostsRepository {
         OR: query
           ? [
               { address: { contains: query, mode: 'insensitive' } },
+              { alias: { contains: query, mode: 'insensitive' } },
+              { username: { contains: query, mode: 'insensitive' } },
               { password: { contains: query, mode: 'insensitive' } },
               {
                 port: Number.isInteger(Number(query))
@@ -30,6 +32,8 @@ export class HostsRepository {
         OR: query
           ? [
               { address: { contains: query, mode: 'insensitive' } },
+              { alias: { contains: query, mode: 'insensitive' } },
+              { username: { contains: query, mode: 'insensitive' } },
               { password: { contains: query, mode: 'insensitive' } },
               {
                 port: Number.isInteger(Number(query))

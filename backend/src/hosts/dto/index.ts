@@ -13,6 +13,14 @@ export class HostBaseDto {
   @ApiProperty()
   @IsString()
   password: string;
+
+  @ApiProperty()
+  @IsString()
+  alias: string;
+
+  @ApiProperty()
+  @IsString()
+  username: string;
 }
 
 export class HostCreateDto extends HostBaseDto {}
