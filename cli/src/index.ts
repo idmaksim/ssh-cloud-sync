@@ -2,8 +2,8 @@
 
 import { Command } from "commander";
 import { auth } from "./commands/auth";
-import { mkdir } from "fs/promises";
-import { CONFIG_DIR } from "./constants";
+import { mkdir, writeFile } from "fs/promises";
+import { CONFIG_DIR, CONFIG_PATH } from "./constants";
 import { check } from "./commands/check";
 import { list } from "./commands/list";
 import chalk from "chalk";
@@ -13,6 +13,10 @@ import { update } from "./commands/update";
 const program = new Command().action(async () => {
   try {
     await mkdir(CONFIG_DIR, { recursive: true });
+    await writeFile(
+      CONFIG_PATH,
+      JSON.stringify({ host: "", secretKey: "" }, null, 2)
+    );
   } catch (error) {
     console.error("Error creating config directory:", error);
   }
