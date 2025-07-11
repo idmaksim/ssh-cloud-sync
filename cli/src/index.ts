@@ -9,6 +9,7 @@ import { list } from "./commands/list";
 import chalk from "chalk";
 import { add } from "./commands/add";
 import { update } from "./commands/update";
+import { connect } from "./commands/connect";
 
 const program = new Command().action(async () => {
   try {
@@ -31,6 +32,7 @@ program
   .addCommand(list)
   .addCommand(add)
   .addCommand(update)
+  .addCommand(connect)
   .parse(process.argv);
 
 process.on("uncaughtException", (error) => {
